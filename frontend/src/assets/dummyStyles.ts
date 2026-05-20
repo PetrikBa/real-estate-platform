@@ -1,4 +1,6 @@
-export const adminContactsStyles = {
+type StyleFn = (...args: any[]) => string;
+type StyleMap = Record<string, string | StyleFn>;
+export const adminContactsStyles: StyleMap = {
   container: "mb-10",
   heading: "text-[2rem] font-extrabold text-text-main mb-2",
   subheading: "text-text-muted text-[0.9rem]",
@@ -19,7 +21,7 @@ export const adminContactsStyles = {
   messageBox: "bg-[#f8fafc] p-4 sm:py-5 sm:px-6 rounded-2xl text-[0.95rem] leading-[1.6] text-[#334155] border border-[#f1f5f9]",
 };
 
-export const adminDashboardStyles = {
+export const adminDashboardStyles: StyleMap = {
   // Loader
   loaderFullPage: "loader-full-page",
   loader: "loader",
@@ -58,7 +60,7 @@ export const adminDashboardStyles = {
   adminToolButton: "btn bg-white/20 text-white w-full justify-start text-[0.875rem]",
 };
 
-export const adminInquiriesStyles = {
+export const adminInquiriesStyles: StyleMap = {
   headerContainer: "mb-12",
   headerTitle: "text-[2rem] font-extrabold text-text-main mb-2",
   headerSubtitle: "text-text-muted",
@@ -85,7 +87,7 @@ export const adminInquiriesStyles = {
   emptyText: "text-text-muted",
 };
 
-export const adminPropertiesStyles = {
+export const adminPropertiesStyles: StyleMap = {
   // Loader
   loaderFullPage: "loader-full-page",
   loader: "loader",
@@ -110,7 +112,7 @@ export const adminPropertiesStyles = {
   deleteButton: "btn bg-[#fef2f2] text-[#dc2626] p-2 border border-[#fee2e2] hover:bg-red-100",
 };
 
-export const adminUsersStyles = {
+export const adminUsersStyles: StyleMap = {
   containerHeader: "flex justify-between items-start mb-8 flex-wrap gap-4",
   headerTitle: "text-[1.75rem] font-extrabold text-text-main mb-1",
   headerSubtitle: "text-text-muted text-[0.875rem]",
@@ -156,7 +158,7 @@ export const adminUsersStyles = {
   emptyState: "py-16 text-center text-text-muted",
 };
 
-export const myInquiriesStyles = {
+export const myInquiriesStyles: StyleMap = {
   loaderFullPage: "loader-full-page",
   loader: "loader",
   bgBgAltMinH: "bg-bg-alt min-h-screen",
@@ -201,7 +203,7 @@ export const myInquiriesStyles = {
   btnMessage: "btn py-2.5 px-4 md:py-3 w-full justify-center bg-[#2563eb] text-white hover:bg-[#1d4ed8] flex items-center gap-2 text-sm rounded-xl font-semibold shadow-sm",
 };
 
-export const sellerRequestsStyles = {
+export const sellerRequestsStyles: StyleMap = {
   // Loader
   loaderFullPage: "loader-full-page",
   loader: "loader",
@@ -237,7 +239,7 @@ export const sellerRequestsStyles = {
   approveButton: "w-full p-3 rounded-xl border-none bg-primary text-white font-bold cursor-pointer flex items-center justify-center gap-2 transition-transform duration-200 ease-in-out hover:-translate-y-[2px]",
 };
 
-export const wishlistStyles = {
+export const wishlistStyles: StyleMap = {
   loaderFullPage: "loader-full-page",
   loader: "loader",
   pageContainer: "bg-bg-alt min-h-screen pt-32 max-lg:pt-28",
@@ -255,7 +257,7 @@ export const wishlistStyles = {
 };
 
 
-export const addPropertyStyles = {
+export const addPropertyStyles: StyleMap = {
   // Container
   outerContainer: "fade-in px-4 py-8 md:py-12 w-full mx-auto dashboard-content",
   innerContainer: "max-w-[900px] w-full mx-auto",
@@ -321,7 +323,7 @@ export const addPropertyStyles = {
   submitButton: "btn btn-primary py-3.5 px-12 font-bold min-w-[180px]",
 };
 
-export const editPropertyStyles = {
+export const editPropertyStyles: StyleMap = {
   pageContainer: "fade-in px-4 py-8 md:py-12 w-full mx-auto dashboard-content",
   innerContainer: "max-w-[900px] w-full mx-auto",
   headerWrapper: "mb-12 text-center",
@@ -359,7 +361,7 @@ export const editPropertyStyles = {
   submitButton: "btn btn-primary py-3.5 px-12 font-bold min-w-[180px]",
 };
 
-export const myPropertiesStyles = {
+export const myPropertiesStyles: StyleMap = {
   // Loader (reuse from other components, but define here for consistency)
   loaderFullPage: "loader-full-page",
   loader: "loader",
@@ -397,7 +399,7 @@ export const myPropertiesStyles = {
   deleteButton: "btn p-2.5 text-[0.8125rem] bg-[#fff5f5] text-[#ef4444] border border-[#fee2e2] flex items-center justify-center gap-1.5 transition-colors hover:bg-[#fee2e2]",
 };
 
-export const pendingApprovalStyles = {
+export const pendingApprovalStyles: StyleMap = {
   // Container
   container: "flex flex-col items-center justify-center min-h-[70vh] text-center p-8",
 
@@ -424,7 +426,7 @@ export const pendingApprovalStyles = {
   supportLink: "text-primary no-underline font-semibold",
 };
 
-export const sellerDashboardStyles = {
+export const sellerDashboardStyles: StyleMap = {
   header: "flex flex-col md:flex-row justify-between items-start mb-8 flex-wrap gap-6 md:gap-6",
   headerLeft: "min-w-0 w-full md:w-auto md:min-w-[280px]",
   headerTitle: "text-[1.5rem] sm:text-[1.75rem] font-extrabold text-text-main mb-1",
@@ -476,7 +478,7 @@ export const sellerDashboardStyles = {
   tipTextMarket: "text-[0.75rem] text-[#6b7280] leading-relaxed",
 };
 
-export const chatMessagesStyles = {
+export const chatMessagesStyles: StyleMap = {
   // Loader (reuse existing)
   loaderFullPage: "loader-full-page",
   loader: "loader",
@@ -531,7 +533,7 @@ export const chatMessagesStyles = {
   noChatTitle: "font-bold",
 };
 
-export const contactStyles = {
+export const contactStyles: StyleMap = {
   // Layout
   container: "min-h-screen bg-[#f8fafc] pt-32 max-lg:pt-28",
   mainContainer: "container py-16 px-6 max-w-[1000px] mx-auto",
@@ -578,7 +580,7 @@ export const contactStyles = {
 };
 
 
-export const profileStyles = {
+export const profileStyles: StyleMap = {
   containerWrapper: (role) => role !== 'seller' ? 'bg-bg-alt min-h-screen pt-32 max-lg:pt-28' : 'bg-transparent min-h-auto',
   mainContainer: (role) => `container fade-in max-w-[800px] mb-16 ${role !== 'seller' ? 'mx-auto pt-12' : 'mx-0 pt-0'}`,
   header: "mb-12 md:text-center md:mb-8",
@@ -611,7 +613,7 @@ export const profileStyles = {
   editProfileButton: "btn btn-primary px-10 py-3.5",
 };
 
-export const landingPageStyles = {
+export const landingPageStyles: StyleMap = {
   // Layout
   bgMain: "bg-bg-main",
   container: "container ",
@@ -772,7 +774,7 @@ export const landingPageStyles = {
     "font-semibold text-primary hover:text-blue-700 hover:underline transition-colors duration-300",
 };
 
-export const propertiesStyles = {
+export const propertiesStyles: StyleMap = {
   // Page container
   pageContainer: "bg-[#f8fafc] min-h-screen pb-16 pt-32 max-lg:pt-28",
   container: "container",
@@ -856,7 +858,7 @@ export const propertiesStyles = {
   mobileOverlay: "fixed inset-0 bg-black/50 z-[2004]",
 };
 
-export const propertyDetailsStyles = {
+export const propertyDetailsStyles: StyleMap = {
   pageContainer: "bg-[#fdfdfd] min-h-screen pb-24 pt-32 max-lg:pt-28",
   mainContainer: "container fade-in pt-4",
   breadcrumbs: "flex items-center flex-wrap gap-2 text-sm text-[#64748b] mb-6",
@@ -956,7 +958,7 @@ export const propertyDetailsStyles = {
   similarEmptyState: "col-span-full p-12 bg-[#f8fafc] rounded-[1.5rem] text-center border border-dashed border-[#e2e8f0] text-[#64748b] break-words whitespace-normal",
 };
 
-export const sellerProfileStyles = {
+export const sellerProfileStyles: StyleMap = {
   // Loader
   loaderFullPage: "loader-full-page",
   loader: "loader",
@@ -989,7 +991,7 @@ export const sellerProfileStyles = {
   emptyProperties: "col-span-full p-12 bg-[#f8fafc] rounded-3xl text-center border border-[#e2e8f0]",
 };
 
-export const forgotPasswordStyles = {
+export const forgotPasswordStyles: StyleMap = {
   container: "bg-bg-alt min-h-screen pt-32 max-lg:pt-28",
   centerWrapper: "container flex justify-center items-center pt-16 sm:pt-8",
   formCard: "glass fade-in w-full max-w-[450px] p-10 sm:p-6 rounded-3xl sm:rounded-2xl shadow-card",
@@ -1005,7 +1007,7 @@ export const forgotPasswordStyles = {
   link: "text-primary font-semibold hover:underline",
 };
 
-export const loginStyles = {
+export const loginStyles: StyleMap = {
   pageContainer: "bg-bg-alt min-h-screen pt-32 max-lg:pt-28",
   containerCenter: "container flex justify-center items-center pt-16 sm:pt-8",
   card: "glass fade-in w-full max-w-[450px] p-10 sm:p-6 rounded-3xl sm:rounded-2xl shadow-card",
@@ -1023,7 +1025,7 @@ export const loginStyles = {
 };
 
 
-export const resetPasswordStyles = {
+export const resetPasswordStyles: StyleMap = {
   container: "bg-bg-alt min-h-screen pt-32 max-lg:pt-28",
   centerWrapper: "container flex justify-center items-center pt-16 sm:pt-8",
   formCard: "glass fade-in w-full max-w-[450px] p-10 sm:p-6 rounded-3xl sm:rounded-2xl shadow-card",
@@ -1039,7 +1041,7 @@ export const resetPasswordStyles = {
   link: "text-primary font-semibold hover:underline",
 };
 
-export const registerStyles = {
+export const registerStyles: StyleMap = {
   // Layout
   pageWrapper: "bg-bg-alt min-h-screen pt-32 max-lg:pt-28",
   container: "container flex justify-center items-center pt-8 pb-16 sm:pt-4 sm:pb-8",
@@ -1073,7 +1075,7 @@ export const registerStyles = {
   loginLink: "text-primary font-semibold hover:underline",
 };
 
-export const verifyEmailStyles = {
+export const verifyEmailStyles: StyleMap = {
   pageContainer: "bg-bg-alt min-h-screen pt-32 max-lg:pt-28",
   containerCenter: "container flex justify-center items-center pt-16 sm:pt-8",
   card: "glass fade-in w-full max-w-[450px] p-10 sm:p-6 rounded-3xl sm:rounded-2xl shadow-card",
@@ -1088,13 +1090,13 @@ export const verifyEmailStyles = {
   submitButton: "btn btn-primary p-3.5 text-base mt-2",
 };
 
-export const adminLayoutStyles = {
+export const adminLayoutStyles: StyleMap = {
   layout: "flex h-screen bg-bg-alt overflow-hidden",
   mainWrapper: "flex-1 flex flex-col min-w-0 h-full overflow-hidden transition-all duration-300 md:ml-[260px]",
   mainContent: "flex-1 overflow-y-auto p-5 md:p-8 relative scroll-smooth fade-in",
 };
 
-export const adminSidebarStyles = {
+export const adminSidebarStyles: StyleMap = {
   backdrop: (isOpen) => `fixed inset-0 w-full h-full bg-black/30 backdrop-blur-sm z-[950] transition-all duration-300 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible hidden md:block'
     }`,
   sidebar: (isOpen) => `fixed left-0 top-0 w-[260px] h-screen bg-white border-r border-[#f1f5f9] py-8 px-5 flex flex-col z-[1000] transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
@@ -1109,19 +1111,19 @@ export const adminSidebarStyles = {
   logoutButton: "w-full flex items-center gap-4 py-3.5 px-4 rounded-xl border-none bg-transparent text-[0.9375rem] font-semibold text-[#dc2626] cursor-pointer transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-red-50",
 };
 
-export const dashboardNavbarStyles = {
+export const dashboardNavbarStyles: StyleMap = {
   header: "h-[64px] bg-white/70 backdrop-blur-[12px] border-b border-white/20 flex items-center px-4 sticky top-0 z-[900] w-full gap-4 md:hidden",
   menuButton: "bg-primary/5 border-none text-primary cursor-pointer flex items-center justify-center w-10 h-10 rounded-xl shrink-0",
   logoContainer: "flex items-center overflow-hidden",
 };
 
-export const sellerLayoutStyles = {
+export const sellerLayoutStyles: StyleMap = {
   container: "flex h-screen bg-bg-alt overflow-hidden",
   contentWrapper: "flex-1 flex flex-col min-w-0 h-full overflow-hidden transition-all duration-300 md:ml-[260px]",
   main: "flex-1 overflow-y-auto p-5 md:p-8 relative scroll-smooth fade-in",
 };
 
-export const reviewSectionStyles = {
+export const reviewSectionStyles: StyleMap = {
   // Loading
   loadingText: "text-center text-[#6b7280] p-8 bg-[#f9fafb] rounded-2xl",
 
@@ -1161,7 +1163,7 @@ export const reviewSectionStyles = {
   emptyState: "text-center text-[#6b7280] p-8 bg-[#f9fafb] rounded-2xl",
 };
 
-export const sellerSidebarStyles = {
+export const sellerSidebarStyles: StyleMap = {
   // Backdrop
   backdrop: "fixed inset-0 w-full h-full bg-black/30 backdrop-blur-sm z-[950] transition-all duration-300",
   backdropVisible: "opacity-100 visible",
@@ -1186,13 +1188,13 @@ export const sellerSidebarStyles = {
   logoutButton: "w-full flex items-center gap-4 py-3.5 px-4 rounded-xl border-none bg-transparent text-[0.9375rem] font-semibold text-[#dc2626] cursor-pointer transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-red-50",
 };
 
-export const logoStyles = {
+export const logoStyles: StyleMap = {
   link: "font-bold text-primary flex items-center gap-3 no-underline whitespace-nowrap",
   iconWrapper: "bg-primary text-white p-2 rounded-[10px] flex items-center justify-center shadow-[0_4px_12px_rgba(13,110,89,0.2)]",
   text: "tracking-[-0.02em] text-[#0d6e59] font-extrabold",
 };
 
-export const navbarStyles = {
+export const navbarStyles: StyleMap = {
   nav: "glass fixed top-0 w-full left-0 z-[1000] py-2 lg:py-4",
   container: "container px-6 max-w-[1400px] mx-auto",
   grid: "grid grid-cols-[auto_1fr_auto] items-center gap-4",
@@ -1216,7 +1218,7 @@ export const navbarStyles = {
   drawerLogoutButton: "btn btn-primary w-full",
 };
 
-export const propertyCardStyles = {
+export const propertyCardStyles: StyleMap = {
   // Card container
   card: "fade-in group flex flex-col bg-white rounded-[1.25rem] overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] border border-[#e2e8f0] relative w-full hover:-translate-y-2 hover:shadow-[0_12px_30px_rgba(0,0,0,0.1)] max-sm:max-w-[420px] max-sm:mx-auto",
   link: "no-underline text-inherit flex flex-col w-full",
