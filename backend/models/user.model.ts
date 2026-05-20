@@ -16,7 +16,8 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     role: {
-      enmu: ['buyer', 'seller', 'admin'],
+      type: String,
+      enum: ['buyer', 'seller', 'admin'],
       default: 'buyer',
     },
     phone: {
