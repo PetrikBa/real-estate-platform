@@ -1,10 +1,8 @@
 import 'express';
+import { IUser } from '../models/user.model.js';
 
 declare module 'express' {
   interface Request {
-    user?: {
-      id: string;
-      role: string;
-    };
+    user?: IUser | null;
   }
 }

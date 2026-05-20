@@ -5,8 +5,33 @@ import bcrypt from 'bcryptjs';
 import sendEmail from '../utils/sendEmail.js';
 import jwt from 'jsonwebtoken';
 
+interface RegisterBody {
+  name: string;
+  email: string;
+  password: string;
+  role: 'buyer' | 'seller' | 'admin';
+}
+
+interface LoginBody {
+  email: string;
+  password: string;
+}
+
+interface VerifyEmailBody {
+  email: string;
+  code: string;
+}
+
+interface ForgotPasswordBody {
+  email: string;
+}
+
+interface ResetPasswordBody {
+  password: string;
+}
+
 // Register a new user
-export const register = async (req: Request, res: Response) => {
+export const register = async (req: Request<{}, {}, RegisterBody>, res: Response) => {
   try {
     const { name, email, password, role } = req.body;
 
@@ -64,7 +89,7 @@ export const register = async (req: Request, res: Response) => {
 };
 
 //login
-export const login = async (req: Request, res: Response) => {
+export const login = async (req: Request<{}, {}, LoginBody>, res: Response) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -110,21 +135,11 @@ export const login = async (req: Request, res: Response) => {
 
 //get my profile
 export const getMe = async (req: Request, res: Response) => {
-  try {
-    const user = await User.findById(req.user?.id).select('-password');
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.status(200).json({ success: true, user });
-  } catch (error) {
-    console.error('Error fetching user profile:', error);
-    res.status(500).json({ message: 'Server error' });
-  }
+  res.status(200).json({ success: true, user: req.user });
 };
 
 //verify email
-export const verifyEmail = async (req: Request, res: Response) => {
+export const verifyEmail = async (req: Request<{}, {}, VerifyEmailBody>, res: Response) => {
   try {
     const { email, code } = req.body;
     if (!email || !code) {
@@ -157,7 +172,7 @@ export const verifyEmail = async (req: Request, res: Response) => {
 
 //forgot password
 // Forgot Password
-export const forgotPassword = async (req: Request, res: Response) => {
+export const forgotPassword = async (req: Request<{}, {}, ForgotPasswordBody>, res: Response) => {
   try {
     const { email } = req.body;
     const user = await User.findOne({ email });
@@ -204,7 +219,10 @@ export const forgotPassword = async (req: Request, res: Response) => {
 }; // for reset pass we require email
 
 //reset password
-export const resetPassword = async (req: Request, res: Response) => {
+export const resetPassword = async (
+  req: Request<{ token: string }, {}, ResetPasswordBody>,
+  res: Response
+) => {
   try {
     const { token } = req.params;
     const { password } = req.body;

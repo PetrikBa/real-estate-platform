@@ -13,8 +13,8 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
       return res.status(401).json({ message: 'Not authorized, no token', success: false });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = await User.findById(decoded.id).select('-password');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as jwt.JwtPayload;
+    req.user = await User.findById(decoded['id']).select('-password');
 
     if (!req.user || req.user.isBlocked) {
       return res.status(403).json({ message: 'Not authorized, user is blocked', success: false });
@@ -26,9 +26,9 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
 };
 
 //role based authorization
-export const authorize = (...roles) => {
-  return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
+export const authorize = (...roles: string[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user || !roles.includes(req.user.role)) {
       return res
         .status(403)
         .json({ message: 'Not authorized, insufficient permissions', success: false });
