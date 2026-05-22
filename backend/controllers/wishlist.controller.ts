@@ -35,3 +35,49 @@ export const addWishlist = async (req: Request, res: Response) => {
     });
   }
 };
+
+//get properties in user wishlist
+export const getWishlist = async (req: Request, res: Response) => {
+  try {
+    const data = await Wishlist.find({ user: req.user?._id }).populate('property');
+
+    res.status(200).json({
+      data,
+      success: true,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: 'Failed to fetch wishlist',
+      success: false,
+      message: error instanceof Error ? error.message : 'Server error',
+    });
+  }
+};
+
+//remove property from wishlist
+export const removeWishlist = async (req: Request, res: Response) => {
+  try {
+    const propertyId = new mongoose.Types.ObjectId(req.params.propertyId as string);
+    const result = await Wishlist.findOneAndDelete({
+      user: req.user?._id,
+      property: propertyId,
+    });
+
+    if (!result) {
+      return res.status(404).json({
+        error: 'Property not found in wishlist',
+        success: false,
+      });
+    }
+    res.status(200).json({
+      message: 'Property removed from wishlist',
+      success: true,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: 'Failed to remove from wishlist',
+      success: false,
+      message: error instanceof Error ? error.message : 'Server error',
+    });
+  }
+};
