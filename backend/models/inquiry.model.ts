@@ -2,7 +2,6 @@ import mongoose, { Document } from 'mongoose';
 
 export interface IInquiry extends Document {
   buyer: mongoose.Types.ObjectId;
-  email: string;
   message: string;
   property: mongoose.Types.ObjectId;
   seller: mongoose.Types.ObjectId;
@@ -24,10 +23,6 @@ const inquirySchema = new mongoose.Schema<IInquiry>(
     isRead: {
       type: Boolean,
       default: false,
-    },
-    email: {
-      type: String,
-      required: true,
     },
     message: {
       type: String,

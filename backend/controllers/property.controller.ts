@@ -1,4 +1,4 @@
-import Property from '../models/property.models.js';
+import Property from '../models/property.model.js';
 import Inquiry from '../models/inquiry.model.js';
 import { uploadToCloudinary } from '../utils/uploadToCloudinary.js';
 import { Request, Response } from 'express';
@@ -272,7 +272,9 @@ export const getAllProperties = async (req: Request, res: Response) => {
 
     if (amenities) {
       query.amenities = {
-        $in: String(amenities).split(',').map((a: string) => a.trim()),
+        $in: String(amenities)
+          .split(',')
+          .map((a: string) => a.trim()),
       };
     }
 
