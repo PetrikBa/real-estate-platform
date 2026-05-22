@@ -42,7 +42,7 @@ export const register = async (req: Request<{}, {}, RegisterBody>, res: Response
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const verificatonToken = Math.floor(100000 + Math.random() * 900000).toString();
+    const verificatonToken = crypto.randomInt(100000, 999999).toString();
 
     const user = await User.create({
       name,
@@ -118,7 +118,10 @@ export const login = async (req: Request<{}, {}, LoginBody>, res: Response) => {
         .json({ message: 'Your account has been blocked. Please contact support.' });
     }
 
-    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET!, {
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) return res.status(500).json({ message: 'Server configuration error' });
+
+    const token = jwt.sign({ id: user._id, role: user.role }, jwtSecret, {
       expiresIn: '7d',
     });
 
@@ -226,10 +229,7 @@ export const resetPassword = async (
   try {
     const { token } = req.params;
     const { password } = req.body;
-    const resetPasswordToken = crypto
-      .createHash('sha256')
-      .update(token as string)
-      .digest('hex');
+    const resetPasswordToken = crypto.createHash('sha256').update(token).digest('hex');
 
     const user = await User.findOne({
       resetPasswordToken,

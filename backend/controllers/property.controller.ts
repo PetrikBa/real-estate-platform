@@ -5,8 +5,20 @@ import { Request, Response } from 'express';
 import cloudinary from '../config/cloudinary.js';
 import jwt from 'jsonwebtoken';
 
+interface JwtPayload {
+  id: string;
+  role: string;
+}
+
+interface UpdateStatusBody {
+  status: 'sale' | 'sold';
+}
+
 export const addProperty = async (req: Request, res: Response) => {
   try {
+    if (!req.user) {
+      return res.status(401).json({ message: 'Unauthorized', success: false });
+    }
     let imageUrls = [];
     if (Array.isArray(req.files) && req.files.length > 0) {
       for (let file of req.files) {
@@ -29,7 +41,7 @@ export const addProperty = async (req: Request, res: Response) => {
       furnishing: req.body.furnishing,
       status: req.body.status,
       images: imageUrls,
-      seller: req.user?._id,
+      seller: req.user._id,
       amenities: req.body.amenities
         ? Array.isArray(req.body.amenities)
           ? req.body.amenities
@@ -47,7 +59,9 @@ export const addProperty = async (req: Request, res: Response) => {
     res.status(201).json({ property, success: true });
   } catch (error) {
     console.error('Add property error', error);
-    res.status(500).json({ message: 'Internal server error' });
+    res
+      .status(500)
+      .json({ message: error instanceof Error ? error.message : 'Server error', success: false });
   }
 };
 
@@ -58,12 +72,14 @@ export const getMyProperties = async (req: Request, res: Response) => {
     res.status(200).json({ properties, success: true });
   } catch (error) {
     console.error('Get my properties error', error);
-    res.status(500).json({ message: 'Internal server error', success: false });
+    res
+      .status(500)
+      .json({ message: error instanceof Error ? error.message : 'Server error', success: false });
   }
 };
 
 //update a property
-export const updateProperty = async (req: Request, res: Response) => {
+export const updateProperty = async (req: Request<{ id: string }>, res: Response) => {
   try {
     const property = await Property.findById(req.params.id);
     if (!property) {
@@ -144,7 +160,7 @@ export const updateProperty = async (req: Request, res: Response) => {
 
 //delete property
 
-export const deleteProperty = async (req: Request, res: Response) => {
+export const deleteProperty = async (req: Request<{ id: string }>, res: Response) => {
   try {
     const property = await Property.findById(req.params.id);
     if (!property) {
@@ -183,7 +199,10 @@ export const deleteProperty = async (req: Request, res: Response) => {
 };
 
 //update property status
-export const updatePropertyStatus = async (req: Request, res: Response) => {
+export const updatePropertyStatus = async (
+  req: Request<{ id: string }, {}, UpdateStatusBody>,
+  res: Response
+) => {
   try {
     const property = await Property.findById(req.params.id);
     if (!property) {
@@ -302,7 +321,7 @@ export const getAllProperties = async (req: Request, res: Response) => {
 };
 
 //to get property details
-export const getPropertyDetails = async (req: Request, res: Response) => {
+export const getPropertyDetails = async (req: Request<{ id: string }>, res: Response) => {
   try {
     const property = await Property.findById(req.params.id).populate(
       'seller',
@@ -320,8 +339,11 @@ export const getPropertyDetails = async (req: Request, res: Response) => {
     if (authHeaders && authHeaders.startsWith('Bearer ')) {
       try {
         const token = authHeaders.split(' ')[1];
-        const decoded: any = jwt.verify(token, process.env.JWT_SECRET!);
-        visitorId = decoded.id;
+        const jwtSecret = process.env.JWT_SECRET;
+        if (jwtSecret) {
+          const decoded = jwt.verify(token, jwtSecret) as JwtPayload;
+          visitorId = decoded.id;
+        }
       } catch (error) {
         //ignore invalid token
       }

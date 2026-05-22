@@ -3,9 +3,19 @@ import Property from '../models/property.model.js';
 import { IUser } from '../models/user.model.js';
 import { Request, Response } from 'express';
 
-export const sendInquiry = async (req: Request, res: Response) => {
+interface SendInquiryBody {
+  propertyId: string;
+  message: string;
+}
+
+export const sendInquiry = async (req: Request<{}, {}, SendInquiryBody>, res: Response) => {
   try {
     const { propertyId, message } = req.body;
+
+    if (!req.user) {
+      return res.status(401).json({ error: 'Unauthorized', success: false });
+    }
+
     const property = await Property.findById(propertyId).populate('seller');
 
     if (!property) {
@@ -17,7 +27,7 @@ export const sendInquiry = async (req: Request, res: Response) => {
     const inquiry = await Inquiry.create({
       property: property._id,
       message,
-      buyer: req.user?._id,
+      buyer: req.user._id,
       seller: seller._id,
     });
 
@@ -59,7 +69,7 @@ export const getSellerInquiries = async (req: Request, res: Response) => {
 };
 
 //mark inquires read
-export const markInquiryAsRead = async (req: Request, res: Response) => {
+export const markInquiryAsRead = async (req: Request<{ id: string }>, res: Response) => {
   try {
     const inquiry = await Inquiry.findById(req.params.id);
     if (!inquiry) {

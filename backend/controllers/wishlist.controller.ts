@@ -1,14 +1,17 @@
 import mongoose from 'mongoose';
 import Wishlist from '../models/wishlist.model.js';
 import { Request, Response } from 'express';
-import Property from '../models/property.model.js';
 
-export const addWishlist = async (req: Request, res: Response) => {
+export const addWishlist = async (req: Request<{ propertyId: string }>, res: Response) => {
   try {
-    const propertyId = new mongoose.Types.ObjectId(req.params.propertyId as string);
+    if (!req.user) {
+      return res.status(401).json({ error: 'Unauthorized', success: false });
+    }
+
+    const propertyId = new mongoose.Types.ObjectId(req.params.propertyId);
 
     const existing = await Wishlist.findOne({
-      user: req.user?._id,
+      user: req.user._id,
       property: propertyId,
     });
 
@@ -20,7 +23,7 @@ export const addWishlist = async (req: Request, res: Response) => {
     }
 
     await Wishlist.create({
-      user: req.user?._id,
+      user: req.user._id,
       property: propertyId,
     });
     res.status(201).json({
@@ -55,11 +58,15 @@ export const getWishlist = async (req: Request, res: Response) => {
 };
 
 //remove property from wishlist
-export const removeWishlist = async (req: Request, res: Response) => {
+export const removeWishlist = async (req: Request<{ propertyId: string }>, res: Response) => {
   try {
-    const propertyId = new mongoose.Types.ObjectId(req.params.propertyId as string);
+    if (!req.user) {
+      return res.status(401).json({ error: 'Unauthorized', success: false });
+    }
+
+    const propertyId = new mongoose.Types.ObjectId(req.params.propertyId);
     const result = await Wishlist.findOneAndDelete({
-      user: req.user?._id,
+      user: req.user._id,
       property: propertyId,
     });
 

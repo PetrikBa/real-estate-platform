@@ -3,6 +3,13 @@ import User from '../models/user.model.js';
 import { Request, Response } from 'express';
 import { uploadToCloudinary } from '../utils/uploadToCloudinary.js';
 
+interface UpdateProfileBody {
+  name?: string;
+  phone?: string;
+  address?: string;
+  removeProfilePicture?: string;
+}
+
 export const getProfile = async (req: Request, res: Response) => {
   try {
     if (!req.user?._id) {
@@ -18,7 +25,7 @@ export const getProfile = async (req: Request, res: Response) => {
 };
 
 //get public profile
-export const getPublicProfile = async (req: Request, res: Response) => {
+export const getPublicProfile = async (req: Request<{ id: string }>, res: Response) => {
   try {
     const user = await User.findById(req.params.id).select('name profilePicture role createdAt');
     if (!user) {
@@ -32,9 +39,9 @@ export const getPublicProfile = async (req: Request, res: Response) => {
 };
 
 //update profile
-export const updateProfile = async (req: Request, res: Response) => {
+export const updateProfile = async (req: Request<{}, {}, UpdateProfileBody>, res: Response) => {
   try {
-    const { name, profilePicture, phone, address, removeProfilePicture } = req.body;
+    const { name, phone, address, removeProfilePicture } = req.body;
 
     if (!req.user?._id) {
       return res.status(401).json({ message: 'Unauthorized', success: false });
